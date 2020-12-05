@@ -1,16 +1,26 @@
 import logger from "./logger";
 import { IRandomizer } from "./Randomizer";
 
+
+//Outcomes 5d8+1+1d10
+/* {
+    0: { def: 5d8, rolls: [ 1,2,3,4,5 ], total: 15 }
+    1: 1
+    2: { def: 1d10, rolls: [ 10 ], total: 10 }
+}*/
+interface IOutcome {
+    def: string, rolls?: number[], total: number
+}
+
 export class Roller {
     randomizer: IRandomizer;
     constructor(randomizer: IRandomizer) {
         this.randomizer = randomizer;
     }
     roll = (rollDefs: string[]) => {
-        let rollOutcomes: number = 0;
+        let rollOutcomes: IOutcome[] = [];
         rollDefs.forEach(rollDef => {
             let operations = this.getOperations(rollDef);
-            let operationOutcomes: number[] = [];
             operations?.forEach(operation => {
                 const isMinus = operation.startsWith('-');
                 const isDieRoll = operation.indexOf('d') > -1;
@@ -18,31 +28,28 @@ export class Roller {
                     let [ count, die ] = operation.split('d');
                     let rolls = this.makeRolls(Math.abs(parseInt(count)), parseInt(die));
                     
-                    logger.info(`${operation} = ${JSON.stringify(rolls)}`)
                     
                     let total = rolls.reduce((prev, cur) => prev += cur, 0);
-                    operationOutcomes.push(isMinus ? -total : total);
+                    logger.info(`${operation} = ${JSON.stringify(rolls)} = ${total}`)
+                    rollOutcomes.push({ def: operation, rolls, total: isMinus ? -total : total });
                 } else {
-                    operationOutcomes.push(parseInt(operation));
+                    rollOutcomes.push({ def: operation, total: parseInt(operation) });
                 }
             });
-            rollOutcomes = operationOutcomes.reduce((prev, cur) => prev += cur, rollOutcomes);
         });
         return rollOutcomes;
     }
     makeRolls = (count: number, die: number) => {
         let rolls = [];
-        
         logger.info(`Rolling ${count} d${die}`)
         for (let i = 0; i < count; i++) {
-            rolls.push(this.makeRoll(die));
+            rolls.push(this.rollDie(die));
         }
         return rolls;
     }
-    makeRoll = (die: number) => this.randomizer.getRandom(1, die)
+    rollDie = (die: number) => this.randomizer.getRandom(1, die)
     getOperations = (rollDef: string) => {
         const rollRegex = /(\-*\d+d\d+)|(\-*\d+)/g;
-        const operations = rollDef.match(rollRegex);
-        return operations;
+        return rollDef.match(rollRegex);
     }
 }

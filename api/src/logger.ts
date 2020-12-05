@@ -11,26 +11,30 @@ const logger = winston.createLogger({
 });
 
 const errorLog = new DailyRotateFile({
-  dirname: "logs",
   filename: "api-error-%DATE%.log",
-  frequency: "1h",
-  datePattern: "YYYY-MM-DD-HH",
-  zippedArchive: true,
-  maxSize: "20m",
-  maxFiles: "30d",
-  level: "error",
-  timestamp: true,
+  dirname: "logs",
+  options: {
+    frequency: "1h",
+    datePattern: "YYYY-MM-DD-HH",
+    zippedArchive: true,
+    maxSize: "20m",
+    maxFiles: "30d",
+    level: "error",
+    timestamp: true,
+  }
 });
 logger.add(errorLog);
 
 const fileLog = new DailyRotateFile({
-  dirname: "logs",
   filename: "api-log-%DATE%.log",
-  datePattern: "YYYY-MM-DD",
-  zippedArchive: true,
-  maxSize: "20m",
-  maxFiles: "30d",
-  timestamp: true,
+  dirname: "logs", 
+  options: {
+    datePattern: "YYYY-MM-DD",
+    zippedArchive: true,
+    maxSize: "20m",
+    maxFiles: "30d",
+    timestamp: true,
+  }
 });
 logger.add(fileLog);
 
