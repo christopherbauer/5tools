@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 5tools-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 5tools
+  template:
+    metadata:
+      labels:
+        app: 5tools
+    spec:
+      containers:
+        - name: 5tools
+          image: christopherbauer/5tools
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 5tools-srv
+spec:
+  selector:
+    app: 5tools
+  ports:
+    - name: 5tools
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

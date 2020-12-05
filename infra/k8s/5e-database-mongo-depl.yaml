@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 5e-database-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 5e-database-mongo
+  template:
+    metadata:
+      labels:
+        app: 5e-database-mongo
+    spec:
+      containers:
+        - name: 5e-database-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 5e-database-mongo-srv
+spec:
+  selector:
+    app: 5e-database-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
