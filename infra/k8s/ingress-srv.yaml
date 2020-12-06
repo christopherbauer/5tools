@@ -14,3 +14,10 @@ spec:
             backend:
               serviceName: roll-srv
               servicePort: 3000
+    - host: 5tools.dev
+      http:
+        paths:
+          - path: /api/encounter/?(.*)
+            backend:
+              serviceName: encounter-srv
+              servicePort: 3001

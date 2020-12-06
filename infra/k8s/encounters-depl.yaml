@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encounter-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: encounter
+  template:
+    metadata:
+      labels:
+        app: encounter
+    spec:
+      containers:
+        - name: encounter
+          image: christopherbauer/5tools/encounters
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: encounter-srv
+spec:
+  selector:
+    app: encounter
+  ports:
+    - name: encounter
+      protocol: TCP
+      port: 3001
+      targetPort: 3001

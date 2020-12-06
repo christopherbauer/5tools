@@ -1,20 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: e5-database-mongo-depl
+  name: e5-database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: e5-database-mongo
+      app: e5-database
   template:
     metadata:
       labels:
-        app: e5-database-mongo
+        app: e5-database
     spec:
       containers:
-        - name: e5-database-mongo
-          image: mongo
+        - name: e5-database
+          image: christopherbauer/5tools/5e-database
+          env:
+            - name: MONGODB_URI
+              value: mongodb://e5-database-mongo-srv:27017/5e-database
 ---
 apiVersion: v1
 kind: Service

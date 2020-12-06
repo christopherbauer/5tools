@@ -8,8 +8,20 @@ build:
   local:
     push: false
   artifacts:
+    - image: christopherbauer/5tools/5e-database
+      context: e5-database
+      docker:
+        dockerfile: DockerFile
     - image: christopherbauer/5tools/rolls
       context: rolls
+      docker:
+        dockerfile: DockerFile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: christopherbauer/5tools/encounters
+      context: encounters
       docker:
         dockerfile: DockerFile
       sync:
