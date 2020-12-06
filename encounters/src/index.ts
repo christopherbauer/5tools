@@ -5,7 +5,7 @@ import { json} from 'body-parser';
 // import { errorHandler } from './middlewares/error-handler';
 import mongoose from 'mongoose';
 import logger from './logger';
-import { Monster } from './models/monster';
+// import { Monster } from './models/monster';
 
 const app = express();
 app.use(json());
@@ -14,11 +14,6 @@ app.use(cookieSession({
     secure: true
 }));
 
-app.get("/api/encounter/echo", (request, response) => {
-    Monster.findOne({ index: 'kobold' })
-        .then((data: any) => { console.log({ data }); });
-    response.send(new Date());
-})
 
 app.all('*', async (request, result) => {
     // throw new NotFoundError();

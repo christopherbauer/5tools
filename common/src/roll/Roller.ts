@@ -1,5 +1,5 @@
-import logger from "../../logger";
-import { IRandomizer } from "../../Randomizer";
+import logger from "../logger";
+import { IRandomizer } from "../Randomizer";
 
 export interface IRoller {
     rollDie: (die: number) => number;

@@ -1,5 +1,5 @@
 import { Roller } from "./Roller";
-import { Randomizer } from "../../Randomizer";
+import { Randomizer } from "../Randomizer";
 import { DefinitionRoller } from "./DefinitionRoller";
 import { sumOutcomes } from "./RollHelper";
 

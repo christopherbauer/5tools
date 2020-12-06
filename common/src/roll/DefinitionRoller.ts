@@ -1,4 +1,4 @@
-import logger from "../../logger";
+import logger from "../logger";
 import { IRoller } from "./Roller";
 
 
@@ -22,7 +22,6 @@ export class DefinitionRoller {
                 if (isDieRoll) {
                     let [count, die] = operation.split('d');
                     let rolls = this.roller.rollMultipleDie(Math.abs(parseInt(count)), parseInt(die));
-
 
                     let total = rolls.reduce((prev, cur) => prev += cur, 0);
                     logger.info(`${operation} = ${JSON.stringify(rolls)} = ${total}`);
