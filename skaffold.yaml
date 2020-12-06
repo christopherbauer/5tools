@@ -8,8 +8,8 @@ build:
   local:
     push: false
   artifacts:
-    - image: christopherbauer/5tools/api
-      context: api
+    - image: christopherbauer/5tools/rolls
+      context: rolls
       docker:
         dockerfile: DockerFile
       sync:

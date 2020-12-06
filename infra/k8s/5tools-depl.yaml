@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 5tools-depl
+  name: roll-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: 5tools
+      app: roll
   template:
     metadata:
       labels:
-        app: 5tools
+        app: roll
     spec:
       containers:
-        - name: 5tools
-          image: christopherbauer/5tools
+        - name: roll
+          image: christopherbauer/5tools/rolls
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: 5tools-srv
+  name: roll-srv
 spec:
   selector:
-    app: 5tools
+    app: roll
   ports:
-    - name: 5tools
+    - name: roll
       protocol: TCP
       port: 3000
       targetPort: 3000

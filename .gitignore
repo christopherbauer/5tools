@@ -1,2 +1,5 @@
 node_modules
 logs
+
+e5-database/*
+!e5-database/README.md

@@ -19,8 +19,9 @@ app.all('*', async (request, result) => {
 app.use(errorHandler);
 
 const start = async () => {
-    app.listen(3010, () => {
-        console.log("Listening on port 3010!");
+    const port = 3000;
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}!`);
     });
 }
 
