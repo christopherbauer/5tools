@@ -2,7 +2,7 @@ import cookieSession from 'cookie-session';
 import express from 'express';
 import { json} from 'body-parser';
 import { CustomErrors, errorHandler } from '@5tools/common';
-import { rollRouter } from './routes/roll';
+import { rollRouter } from './routes/rollRoute';
 
 const app = express();
 app.use(json());
