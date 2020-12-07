@@ -1,5 +1,5 @@
 import express from 'express';
-import { Roll, Randomizer } from '../../../common/src/index';
+import { Roll, Randomizer } from '@5tools/common';
 
 const router = express.Router();
 

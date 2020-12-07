@@ -1,5 +1,7 @@
-import { Randomizer } from './Randomizer';
-import * as Roll from './roll';
-import logger from './logger';
+import { errorHandler } from "./middlewares/error-handler";
+import { Randomizer } from "./Randomizer";
+import * as Roll from "./roll";
+import logger from "./logger";
+import * as CustomErrors from "./errors";
 
-export { Randomizer, Roll, logger };
+export { Randomizer, Roll, logger, CustomErrors, errorHandler };
