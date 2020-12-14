@@ -1,7 +1,7 @@
 import express from 'express';
 import { Roll, Randomizer } from '@5tools/common';
 import { sumOutcomes } from '@5tools/common/dist/roll';
-import { Pieces } from '../Pieces';
+import { Pieces } from '../../Pieces';
 
 const router = express.Router();
 
@@ -41,8 +41,8 @@ const lowerComplications: IComplication[] = [
     { outcome: "Streaking naked through the streets seemed like a good idea at the time" },
     { outcome: "Everyone is calling you by some weird, embarrassing nickname, like Puddle Drinker or Bench Slayer, and no one will say why", rivalInvolved: rivalInvolved() },
 ]
-router.get("/api/downtime/carousing/lower/:persuasionBonus", (request, response) => {
-    const { persuasionBonus } = request.params;
+router.post("/api/downtime/carousing/lower", (request, response) => {
+    const { persuasionBonus } = request.body;
 
     const total = sumOutcomes(roller.roll([ "1d20" ])) + parseInt(persuasionBonus);
 
@@ -56,7 +56,7 @@ router.get("/api/downtime/carousing/lower/:persuasionBonus", (request, response)
     if(hasComplication) {
         const complicationRoll = sumOutcomes(roller.roll([ "1d8" ]));
 
-        const complication = upperComplications[complicationRoll];
+        const complication = lowerComplications[complicationRoll];
         
         carouseResponse.complication = processComplication(complication);
     }
@@ -74,8 +74,8 @@ const middleComplications: IComplication[] = [
     { outcome: "You made a drunken toast that scandalized the locals" },
     { outcome: "You spent an additional {0} trying to impress people", outcomeInterpolation: [ new Pieces({ gold: sumOutcomes(roller.roll([ "80+8d6" ])) }).toString() ] }
 ];
-router.get("/api/downtime/carousing/middle/:persuasionBonus", (request, response) => {
-    const { persuasionBonus } = request.params;
+router.post("/api/downtime/carousing/middle", (request, response) => {
+    const { persuasionBonus } = request.body;
 
     const total = sumOutcomes(roller.roll([ "1d20" ])) + parseInt(persuasionBonus);
 
@@ -107,8 +107,8 @@ const upperComplications: IComplication[] = [
     { outcome: "You spent an additional {0} trying to impress people", outcomeInterpolation: [ sumOutcomes(roller.roll([ "450+25d4" ])).toString() ] }
 ];
 
-router.get("/api/downtime/carousing/upper/:persuasionBonus", (request, response) => {
-    const { persuasionBonus } = request.params;
+router.post("/api/downtime/carousing/upper", (request, response) => {
+    const { persuasionBonus } = request.body;
 
     const total = sumOutcomes(roller.roll([ "1d20" ])) + parseInt(persuasionBonus);
 
@@ -129,3 +129,5 @@ router.get("/api/downtime/carousing/upper/:persuasionBonus", (request, response)
    
     response.send(carouseResponse);
 });
+
+export { router as carousingRouter };

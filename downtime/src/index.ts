@@ -3,6 +3,7 @@ import express from 'express';
 import { json} from 'body-parser';
 import { CustomErrors, errorHandler } from '@5tools/common';
 import { downtimeRouter } from './routes/downtimeRoute';
+import { carousingRouter } from './routes/carousing/carousingRoute';
 
 const app = express();
 app.use(json());
@@ -12,6 +13,7 @@ app.use(cookieSession({
 }));
 
 app.use(downtimeRouter);
+app.use(carousingRouter);
 app.all('*', async (request, result) => {
     throw new CustomErrors.NotFoundError();
 });
